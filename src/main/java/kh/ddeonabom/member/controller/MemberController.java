@@ -32,10 +32,9 @@ public class MemberController {
 		return "views/member/join";
 	}
 	
-	// 2. 이메일 인증번호 발송 (AJAX)
-    // - 입력한 이메일로 인증번호 전송
-    // - 서버 세션에 인증코드 저장
-    // =========================================================
+	// 이메일 인증번호 발송 (AJAX)
+    // 입력한 이메일로 인증번호 전송
+    // 서버 세션에 인증코드 저장
     @PostMapping("/send")
     @ResponseBody
     public String sendEmail(@RequestParam("email") String email,
@@ -52,9 +51,9 @@ public class MemberController {
     }
 
 
- // 3. 인증번호 검증 (AJAX)
-    // - 사용자가 입력한 코드와 세션 코드 비교
-    // - 성공 시 인증 완료 상태 저장
+ // 인증번호 검증 (AJAX)
+    //  사용자가 입력한 코드와 세션 코드 비교
+    //  성공 시 인증 완료 상태 저장
     // =========================================================
     @PostMapping("/verify")
     @ResponseBody
@@ -78,7 +77,7 @@ public class MemberController {
         return "fail";
     }
 
- // 4. 회원가입 처리
+ //  회원가입 처리
     // - 이메일 인증 여부 확인 (필수)
     // - 이메일 일치 여부 확인 (보안)
     // - 이메일 중복 체크
