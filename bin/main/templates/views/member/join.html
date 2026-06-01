@@ -28,7 +28,8 @@
 
     <!-- 비밀번호 -->
     <input type="password" name="pwd" class="form-control mb-2" placeholder="비밀번호">
-
+	<small id="pwdRuleMsg"></small>
+	
     <!-- 비밀번호 확인 -->
     <input type="password" id="pwdCheck" class="form-control mb-1" placeholder="비밀번호 확인">
     <small id="pwdMsg"></small>
@@ -49,7 +50,7 @@
     </div>
 
     <!-- 인증번호 -->
-    <div class="input-group mb-2">
+    <div class="input-group mb-2" id="authArea" style="display:none;">
         <input type="text" id="authCode" class="form-control" placeholder="인증번호">
         <button type="button" class="btn btn-outline-success" id="verifyBtn">확인</button>
     </div>
@@ -71,6 +72,25 @@
 
 <script>
 
+$("input[name='pwd']").on("keyup", function() {
+
+    let pwd = $(this).val();
+
+    let reg =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+
+    if(reg.test(pwd)){
+        $("#pwdRuleMsg")
+            .text("사용 가능한 비밀번호입니다.")
+            .css("color","green");
+    }else{
+        $("#pwdRuleMsg")
+            .text("8~20자, 영문+숫자+특수문자를 포함해야 합니다.")
+            .css("color","red");
+    }
+});
+
+
 // =========================
 // 이메일 인증번호 발송
 // =========================
@@ -87,6 +107,8 @@ $("#sendCodeBtn").click(function () {
 
             if (res === "success") {
                 sessionStorage.setItem("emailVerified", "false"); // 발송 = 아직 인증 안됨
+                $("#authArea").slideDown();//누르면 슬라이드로 등장
+                
                 $("#emailMsg").text("인증번호 발송 완료").css("color", "green");
             } else {
                 $("#emailMsg").text("발송 실패").css("color", "red");
@@ -95,29 +117,41 @@ $("#sendCodeBtn").click(function () {
     });
 });
 
-
 // =========================
 // 인증번호 확인
 // =========================
 $("#verifyBtn").click(function () {
 
-    $.ajax({
-        url: "/member/verify",
-        type: "post",
-        data: { code: $("#authCode").val() },
-        success: function (res) {
+	$.ajax({
+	    url: "/member/verify",
+	    type: "post",
+	    data: { code: $("#authCode").val() },
 
-            if (res === "success") {
-                sessionStorage.setItem("emailVerified", "true");
-                $("#emailMsg").text("이메일 인증 완료").css("color", "green");
-            } else {
-                sessionStorage.setItem("emailVerified", "false");
-                $("#emailMsg").text("인증 실패").css("color", "red");
-            }
-        }
-    });
+	    success: function(res) {
+
+	        if(res === "success") {
+
+	            sessionStorage.setItem("emailVerified", "true");
+
+	            $("#emailMsg")
+	                .text("✔ 이메일 인증 완료")
+	                .css("color", "green");
+
+	            $("#authCode").prop("disabled", true);
+	            $("#verifyBtn").prop("disabled", true);
+	            $("#sendCodeBtn").prop("disabled", true);
+
+	        } else {
+
+	            sessionStorage.setItem("emailVerified", "false");
+
+	            $("#emailMsg")
+	                .text("인증 실패")
+	                .css("color", "red");
+	        }
+	    }
+	});
 });
-
 
 // =========================
 // 비밀번호 확인
@@ -145,17 +179,37 @@ $("form").submit(function (e) {
 
     let pwd = $("input[name='pwd']").val();
     let pwdCheck = $("#pwdCheck").val();
+    let reg =
+    	/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
+    	if(!reg.test(pwd)){
+    	    alert("비밀번호 형식을 확인해주세요.");
+    	    return;
+    	}
+    // 이메일 공백 체크
+    	let id = $("input[name='id']").val().trim();
+
+    	if(id === ""){
+    	    alert("아이디를 입력하세요.");
+    	    return;
+    	}
     // =========================
-    // 1. 이메일 인증 체크
+    // 이메일 인증 체크
     // =========================
     if (emailOk !== "true") {
         alert("이메일 인증 필요");
         return;
     }
+    //닉네임 공백 체크
+    let nickName = $("input[name='nickName']").val().trim();
+
+    if(nickName === ""){
+        alert("닉네임을 입력하세요.");
+        return;
+    }
 
     // =========================
-    // 2. 비밀번호 일치 체크
+    // 비밀번호 일치 체크
     // =========================
     if (pwd !== pwdCheck) {
         alert("비밀번호가 일치하지 않습니다");
