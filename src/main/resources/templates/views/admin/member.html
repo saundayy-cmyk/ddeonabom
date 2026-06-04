@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{views/common/head :: head}"></head>
+<body>
+	<div th:replace="~{views/common/navbar :: navbar}"></div>
+	
+	<main class="mx-auto my-12 max-w-wide px-6">
+  <div class="mb-6 flex items-end justify-between">
+    <div><h1 class="text-28 font-extrabold tracking-tight">회원 관리</h1><p class="mt-1 text-sm text-muted tabular-nums">전체 9,107명 · 오늘 가입 124명</p></div>
+    <div class="flex gap-2"><button class="inline-flex h-11 items-center rounded-lg border border-line bg-white px-4 text-sm font-semibold text-ink transition hover:bg-white">내보내기 (CSV)</button><button class="inline-flex h-11 items-center rounded-lg bg-brand px-4 text-sm font-semibold text-white transition hover:bg-brand-ink">회원 추가</button></div>
+  </div>
+
+  <div class="mb-4 flex items-center gap-2">
+    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-ink bg-ink px-4 text-13 font-semibold text-white">전체</span>
+    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-line bg-white px-4 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">활동</span>
+    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-line bg-white px-4 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">휴면</span>
+    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-line bg-white px-4 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">정지</span>
+    <div class="relative ml-auto">
+      <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.5"/><path d="M12.5 12.5L16 16"/></svg>
+      <input class="h-9 w-64 rounded-lg border border-line bg-white pl-9 pr-3 text-13 outline-none transition placeholder:text-faint focus:border-brand" placeholder="아이디·닉네임·이메일 검색" />
+    </div>
+  </div>
+
+  <div class="overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+    <table class="w-full text-sm">
+      <thead><tr class="border-b border-line text-13 font-semibold text-muted">
+        <th class="w-10 p-4 text-left"><input type="checkbox" class="accent-brand" /></th>
+        <th class="p-4 text-left">회원</th><th class="p-4 text-left">이메일</th><th class="p-4 text-left">가입일</th><th class="p-4 text-left">일정</th><th class="p-4 text-left">후기</th><th class="p-4 text-left">상태</th><th class="p-4 text-right">관리</th>
+      </tr></thead>
+      <tbody>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">바</span><div><div class="font-bold">바다윤슬</div><div class="text-xs text-muted">@travel_yunseul</div></div></div></td>
+        <td class="p-4 text-muted">yunseul@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2025.06.12</td>
+        <td class="p-4 tabular-nums">8</td>
+        <td class="p-4 tabular-nums">17</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-emerald-50 text-ok">활동</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">제</span><div><div class="font-bold">제주한바퀴</div><div class="text-xs text-muted">@jeju_round</div></div></div></td>
+        <td class="p-4 text-muted">round@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2025.08.03</td>
+        <td class="p-4 tabular-nums">12</td>
+        <td class="p-4 tabular-nums">24</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-emerald-50 text-ok">활동</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">노</span><div><div class="font-bold">노을수집가</div><div class="text-xs text-muted">@sunset_log</div></div></div></td>
+        <td class="p-4 text-muted">sunset@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2025.09.21</td>
+        <td class="p-4 tabular-nums">5</td>
+        <td class="p-4 tabular-nums">31</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-emerald-50 text-ok">활동</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">느</span><div><div class="font-bold">느린산책</div><div class="text-xs text-muted">@slow_walk</div></div></div></td>
+        <td class="p-4 text-muted">slow@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2024.11.30</td>
+        <td class="p-4 tabular-nums">3</td>
+        <td class="p-4 tabular-nums">9</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-sunk text-muted">휴면</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">길</span><div><div class="font-bold">길위의하루</div><div class="text-xs text-muted">@onthe_road</div></div></div></td>
+        <td class="p-4 text-muted">road@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2025.02.14</td>
+        <td class="p-4 tabular-nums">7</td>
+        <td class="p-4 tabular-nums">12</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-emerald-50 text-ok">활동</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">모</span><div><div class="font-bold">모모트래블</div><div class="text-xs text-muted">@momo_travel</div></div></div></td>
+        <td class="p-4 text-muted">momo@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2025.10.08</td>
+        <td class="p-4 tabular-nums">2</td>
+        <td class="p-4 tabular-nums">4</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-emerald-50 text-ok">활동</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">별</span><div><div class="font-bold">별헤는밤</div><div class="text-xs text-muted">@starry_night</div></div></div></td>
+        <td class="p-4 text-muted">starry@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2024.07.19</td>
+        <td class="p-4 tabular-nums">15</td>
+        <td class="p-4 tabular-nums">42</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-emerald-50 text-ok">활동</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr>
+      <tr class="border-b border-line transition hover:bg-sunk">
+        <td class="p-4"><input type="checkbox" class="accent-brand" /></td>
+        <td class="p-4"><div class="flex items-center gap-2.5"><span class="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-brand-soft text-13 font-bold text-brand-ink">U</span><div><div class="font-bold">user_8812</div><div class="text-xs text-muted">@user_8812</div></div></div></td>
+        <td class="p-4 text-muted">u8812@email.com</td>
+        <td class="p-4 text-muted tabular-nums">2026.01.05</td>
+        <td class="p-4 tabular-nums">0</td>
+        <td class="p-4 tabular-nums">3</td>
+        <td class="p-4"><span class="inline-flex h-6 items-center rounded-full px-2.5 text-xs font-bold bg-red-50 text-err">정지</span></td>
+        <td class="p-4"><div class="flex justify-end gap-1.5"><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">👁</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-muted transition hover:border-muted hover:text-ink">✉</span><span class="flex h-7.5 w-7.5 items-center justify-center rounded-md border border-line bg-white text-err transition hover:border-err">⊘</span></div></td>
+      </tr></tbody>
+    </table>
+    <div class="flex items-center justify-between border-t border-line px-5 py-4">
+      <span class="text-13 text-muted">총 9,107명 중 1–10</span>
+      <div class="flex gap-1">
+        <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">‹</a>
+        <span class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg bg-brand px-2 text-sm font-medium text-white">1</span>
+        <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">2</a>
+        <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">3</a>
+        <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">›</a>
+      </div>
+    </div>
+  </div>
+</main>
+	
+	
+	<div th:replace="~{views/common/modal :: modal}"></div>
+	<footer th:replace="~{views/common/footer :: footer}"></footer>
+</body>
+</html>
