@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{views/common/head :: head}"></head>
+<body>
+	<div th:replace="~{views/common/navbar :: navbar}"></div>
+	<button onclick="openInfoModal('저장 완료', '일정이 성공적으로 저장되었습니다.')"
+	      class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700">
+	  알림 모달
+	</button>
+	
+	<button onclick="openConfirmModal('일정 공유', '공유하면 다른 여행자들이 내 일정을 볼 수 있어요.', () => alert('공유 실행!'))"
+	      class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-50">
+	  확인 모달
+	</button>
+	
+	<button onclick="openDangerModal('일정 삭제', '삭제한 일정은 되돌릴 수 없어요.', () => alert('삭제 실행!'))"
+	      class="px-5 py-2.5 rounded-xl bg-red-600 text-white text-sm font-semibold hover:bg-red-700">
+	  경고 모달
+	</button>
+	
+	<button onclick="showToast('관심 관광지에 담았어요')"
+	      class="px-5 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-700">
+	  토스트 (아이콘)
+	</button>
+	
+	<button onclick="showToast('로그인이 필요한 기능이에요', false)"
+	      class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-50">
+	  토스트 (plain)
+	</button>
+	<div th:replace="~{views/common/modal :: modal}"></div>
+	<footer th:replace="~{views/common/footer :: footer}"></footer>
+</div>
+</body>
+</html>
