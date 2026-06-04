@@ -31,4 +31,21 @@
 	select * from member
 	where id=#{id} and status ='Y'
 </select>
+
+<update id="updateMemberWithPassword">
+	update Member
+	set
+	nickname=#{nickName},
+	email=#{email},
+	pwd=#{pwd},
+	where id=#{id}
+
+</update>
+<update id="updateMemberWithoutPassword">
+	update Member
+	set
+	nickname=#{nickName},
+	email=#{email}
+	where id=#{id}
+	</update>
 </mapper>

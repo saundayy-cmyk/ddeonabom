@@ -58,4 +58,13 @@ public class MemberService implements UserDetailsService { // 💡 1. 시큐리�
 	public boolean existsByEmail(String email) {
 		 return mapper.existsByEmail(email) > 0;
 	}
+
+
+	public int updateMemberWithPassword(Member m) {
+		return mapper.updateMemberWithPassword(m);
+	}
+
+	public int updateMemberWithoutPassword(Member m) {
+		return mapper.updateMemberWithoutPassword(m);
+	}
 }
