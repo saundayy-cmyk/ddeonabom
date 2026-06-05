@@ -158,6 +158,41 @@ public class MemberController {
 
         return "FAIL";
     }
-}
+    
+    @GetMapping("/edit")
+    public String editPage() {
+        return "views/member/edit";
+    }
+
+    @PostMapping("/update")
+    public String updateMember(
+            @ModelAttribute Member m,
+            @RequestParam(required = false) String newPassword, // 선택 입력이므로 required = false
+            @RequestParam String authCode,                      // 이메일 인증번호
+            HttpSession session) {
+        
+        // [백엔드 로직 팁]
+        // 1. 세션에서 로그인한 유저 정보 꺼내기
+        // 2. 인증번호(authCode)가 맞는지 최종 검증
+        // 3. 만약 newPassword가 비어있지 않다면(새 비번을 입력했다면) 암호화해서 m 객체에 세팅
+        // 4. 서비스 레이어 호출하여 DB 업데이트 수행 (update member ...)
+        
+        return "redirect:/member/mypage"; // 수정 완료 후 마이페이지로 이동
+    }
+
+    // 수정 페이지에서 [회원 탈퇴] 링크를 클릭했을 때 (GET)
+    @GetMapping("/withdraw")
+    public String withdrawPage() {
+        return "withdraw"; 
+    }
+
+    // 탈퇴 뷰 페이지에서 [탈퇴하기] 버튼을 눌렀을 때 (POST)
+    @PostMapping("/withdraw")
+    public String doWithdraw(@RequestParam String password, HttpSession session) {
+        // 탈퇴 로직 처리...
+        return "redirect:/"; 
+    }
+} // 괄호 갯수 정돈 완료 (에러 해결!)
+
 	
 

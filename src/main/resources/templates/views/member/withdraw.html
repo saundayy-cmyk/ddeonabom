@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>떠나봄 - 회원 탈퇴</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+        
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-red-50 rounded-full text-red-500 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">정말 탈퇴하시겠습니까?</h1>
+            <p class="text-sm text-gray-500 mt-2">탈퇴 전 아래의 안내 사항을 반드시 확인해 주세요.</p>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-4 text-sm text-gray-600 space-y-2 mb-6 border border-gray-100">
+            <p class="font-semibold text-gray-700">⚠️ 탈퇴 시 주의사항</p>
+            <ul class="list-disc list-inside space-y-1 text-xs text-gray-500">
+                <li>회원 계정 및 프로필 정보가 모두 완전히 삭제됩니다.</li>
+                <li>작성하신 여행 플래너 및 게시글은 자동으로 삭제되지 않으므로, 탈퇴 전에 직접 삭제하셔야 합니다.</li>
+                <li>탈퇴 완료 후에는 동일한 아이디로 재가입이 불가능합니다.</li>
+            </ul>
+        </div>
+
+        <form action="/member/withdraw" method="POST" onsubmit="return finalCheck()" class="space-y-5">
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">본인 확인 비밀번호</label>
+                <input type="password" id="password" name="password" required placeholder="현재 비밀번호를 입력하세요"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all">
+            </div>
+
+            <div class="flex items-start pt-1">
+                <div class="flex items-center h-5">
+                    <input id="agree" name="agree" type="checkbox" required
+                           class="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer">
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="agree" class="font-medium text-gray-600 cursor-pointer select-none">
+                        안내 사항을 모두 확인하였으며, 이에 동의합니다.
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 gap-4">
+                <button type="submit" 
+                        class="flex-1 bg-red-600 text-white font-medium py-3 rounded-lg hover:bg-red-700 transition-colors text-center shadow-sm text-sm">
+                    탈퇴하기
+                </button>
+                <a href="/member/edit" 
+                   class="flex-1 bg-gray-100 text-gray-700 font-medium py-3 rounded-lg hover:bg-gray-200 transition-colors text-center shadow-sm text-sm">
+                    돌아가기
+                </a>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        function finalCheck() {
+            // 사용자가 '확인'을 누를 때만 서버(POST)로 폼이 제출됩니다.
+            return confirm("최종 확인\n정말로 탈퇴 처리를 진행하시겠습니까?");
+        }
+    </script>
+</body>
+</html>

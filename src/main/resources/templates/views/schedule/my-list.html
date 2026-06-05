@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{views/common/head :: head}"></head>
+<body>
+	<div th:replace="~{views/common/navbar :: navbar}"></div>
+	<main class="mx-auto max-w-wide px-6">
+	  <div class="flex items-end justify-between pb-5 pt-12">
+	    <div>
+	      <span class="inline-flex items-center gap-2 text-sm font-semibold text-brand before:h-0.5 before:w-4 before:rounded before:bg-brand">일정 플래너</span>
+	      <h1 class="mt-2 text-h2 font-extrabold tracking-tight">내 일정</h1>
+	    </div>
+	    <a href="itinerary.html" class="inline-flex h-12 items-center rounded-lg bg-brand px-8 text-15 font-semibold text-white transition hover:bg-brand-ink">＋ 새 일정 만들기</a>
+	  </div>
+	
+	  <div class="flex items-center gap-2 border-b border-line pb-5">
+	    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-ink bg-ink px-4 text-13 font-semibold text-white">전체 8</span>
+	    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-line bg-white px-4 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">공유됨 5</span>
+	    <span class="inline-flex h-9 cursor-pointer items-center rounded-full border border-line bg-white px-4 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">비공개 2</span>
+	    <div class="ml-auto"><select class="h-9 rounded-lg border border-line bg-white px-3 text-13 font-semibold text-ink outline-none"><option>최근 수정순</option><option>여행일순</option><option>이름순</option></select></div>
+	  </div>
+	
+	  <div class="grid grid-cols-3 gap-5 py-6">
+	    <a href="itinerary.html" class="flex min-h-72 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-line bg-sunk text-center text-muted transition hover:border-brand hover:bg-brand-soft hover:text-brand">
+	      <span class="flex h-13 w-13 items-center justify-center rounded-full bg-white text-2xl shadow-soft">＋</span>
+	      <b class="text-base font-bold">새 일정 만들기</b>
+	      <span class="text-13">관심 관광지를 끌어와 동선을 그려보세요</span>
+	    </a>
+	    
+	    <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	      <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	        <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M22 28.2 L53.1 78 L87.1 59.3 L121 22 L138 71.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="22" cy="28.2" r="4.2" fill="currentColor"/>
+	        <circle cx="53.1" cy="78" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="87.1" cy="59.3" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="121" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="138" cy="71.8" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">제주 동쪽</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-brand text-white px-3 text-xs font-medium">공유됨</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">제주 동쪽 한 바퀴</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.04.10 — 04.13 · 3박 4일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">12</b>곳</span><span>♥ <b class="font-bold text-ink tabular-nums">184</b></span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  <!-- 빈 일정 (0곳) — 사진·동선 없는 상태 -->
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E9ECF3 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E9ECF3 1px,transparent 1px) 0 0/26px 26px,#F4F6FA;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full">
+	        <path d="M34 70 Q 80 30 126 52" fill="none" stroke="#C5CBD8" stroke-width="2" stroke-linecap="round" stroke-dasharray="1.5 8"/>
+	        <circle cx="34" cy="70" r="3.6" fill="#F4F6FA" stroke="#C5CBD8" stroke-width="1.6"/>
+	        <circle cx="126" cy="52" r="3.6" fill="#F4F6FA" stroke="#C5CBD8" stroke-width="1.6"/>
+	      </svg>
+	      <div class="absolute inset-0 flex flex-col items-center justify-center gap-0.5">
+	        <b class="text-13 font-bold text-muted">아직 동선이 없어요</b>
+	        <span class="text-[11.5px] text-faint">관광지를 끌어와 길을 그려보세요</span>
+	      </div>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full border border-line bg-white text-muted px-3 text-xs font-medium">작성 중</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">남해 가을 드라이브</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">날짜 미정</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">0</b>곳</span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 3l2 2-7 7-2.5.5.5-2.5z"/></svg> 이어서 그리기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M22 38 L63.4 78 L121.4 54 L138 22 L30.3 46" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="22" cy="38" r="4.2" fill="currentColor"/>
+	        <circle cx="63.4" cy="78" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="121.4" cy="54" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="138" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="30.3" cy="46" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">경주</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full border border-line bg-white text-muted px-3 text-xs font-medium">작성 중</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">경주 야경 코스</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.05.05 — 05.07 · 2박 3일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">7</b>곳</span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M48.8 44.4 L102.3 22 L75.5 78 L138 55.6 L22 33.2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="48.8" cy="44.4" r="4.2" fill="currentColor"/>
+	        <circle cx="102.3" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="75.5" cy="78" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="138" cy="55.6" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="22" cy="33.2" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">속초</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-brand text-white px-3 text-xs font-medium">공유됨</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">속초 1박 2일, 바다와 산</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.03.30 — 03.31 · 1박 2일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">5</b>곳</span><span>♥ <b class="font-bold text-ink tabular-nums">121</b></span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M55.1 64 L138 50 L104.9 22 L22 36 L88.3 78" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="55.1" cy="64" r="4.2" fill="currentColor"/>
+	        <circle cx="138" cy="50" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="104.9" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="22" cy="36" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="88.3" cy="78" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">전주</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-ink text-white px-3 text-xs font-medium">비공개</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">전주 한옥마을 도보</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.02.14 — 02.15 · 1박 2일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">9</b>곳</span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M55.1 64 L138 50 L104.9 22 L22 36 L88.3 78" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="55.1" cy="64" r="4.2" fill="currentColor"/>
+	        <circle cx="138" cy="50" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="104.9" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="22" cy="36" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="88.3" cy="78" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">전주</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-ink text-white px-3 text-xs font-medium">비공개</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">전주 한옥마을 도보</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.02.14 — 02.15 · 1박 2일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">9</b>곳</span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	        <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	          <path d="M47.6 26.7 L84.9 43.8 L118.3 62.4 L138 78 L22 22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	          <circle cx="47.6" cy="26.7" r="4.2" fill="currentColor"/>
+	          <circle cx="84.9" cy="43.8" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	          <circle cx="118.3" cy="62.4" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	          <circle cx="138" cy="78" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	          <circle cx="22" cy="22" r="4.2" fill="currentColor"/>
+	        </svg>
+	        <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">강원 동해안</span>
+	        <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-brand text-white px-3 text-xs font-medium">공유됨</span>
+	      </a>
+	      <a href="itinerary.html" class="block p-4">
+	        <div class="text-17 font-bold">강원 동해안 ↔ 설악</div>
+	        <div class="mt-1 text-13 text-muted tabular-nums">2026.01.18 — 01.21 · 3박 4일</div>
+	        <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">11</b>곳</span><span>♥ <b class="font-bold text-ink tabular-nums">73</b></span></div>
+	      </a>
+	      <div class="mt-auto flex border-t border-line">
+	        <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	        <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	        <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	      </div>
+	    </div>
+	    <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M55.1 64 L138 50 L104.9 22 L22 36 L88.3 78" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="55.1" cy="64" r="4.2" fill="currentColor"/>
+	        <circle cx="138" cy="50" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="104.9" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="22" cy="36" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="88.3" cy="78" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">전주</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-ink text-white px-3 text-xs font-medium">비공개</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">전주 한옥마을 도보</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.02.14 — 02.15 · 1박 2일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">9</b>곳</span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  <div class="flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-soft">
+	    <a href="itinerary.html" class="relative block aspect-video overflow-hidden">
+	      <div class="absolute inset-0" style="background:linear-gradient(to right,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,linear-gradient(to bottom,#E1E5EE 1px,transparent 1px) 0 0/26px 26px,#EEF1F6;"></div>
+	      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full text-brand">
+	        <path d="M55.1 64 L138 50 L104.9 22 L22 36 L88.3 78" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+	        <circle cx="55.1" cy="64" r="4.2" fill="currentColor"/>
+	        <circle cx="138" cy="50" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="104.9" cy="22" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="22" cy="36" r="3" fill="#fff" stroke="currentColor" stroke-width="1.7"/>
+	        <circle cx="88.3" cy="78" r="4.2" fill="currentColor"/>
+	      </svg>
+	      <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-0.5 text-[11.5px] font-semibold text-muted backdrop-blur-sm">전주</span>
+	      <span class="absolute left-2.5 top-2.5 inline-flex h-7 items-center rounded-full bg-ink text-white px-3 text-xs font-medium">비공개</span>
+	    </a>
+	    <a href="itinerary.html" class="block p-4">
+	      <div class="text-17 font-bold">전주 한옥마을 도보</div>
+	      <div class="mt-1 text-13 text-muted tabular-nums">2026.02.14 — 02.15 · 1박 2일</div>
+	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">9</b>곳</span></div>
+	    </a>
+	    <div class="mt-auto flex border-t border-line">
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M5.4 7.2 10.6 4.6 M5.4 8.8 10.6 11.4"/></svg> 공유</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v7H8l-3 3v-3H3z"/></svg> 후기</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	    </div>
+	  </div>
+	  </div>
+	</main>
+	
+	
+	
+	
+	
+	<div th:replace="~{views/common/modal :: modal}"></div>
+	<footer th:replace="~{views/common/footer :: footer}"></footer>
+</body>
+</html>
