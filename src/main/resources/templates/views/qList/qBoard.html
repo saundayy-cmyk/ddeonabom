@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="~{views/common/head :: head}"></head>
+<body>
+	<div th:replace="~{views/common/navbar :: navbar}"></div>
+	
+	<!-- ════════════ MAIN ════════════ -->
+<main class="mx-auto max-w-board px-6 pb-24 pt-12">
+  <div class="mb-6 flex items-end justify-between">
+    <div>
+      <span class="inline-flex items-center gap-2 text-sm font-semibold text-brand before:h-0.5 before:w-4 before:rounded before:bg-brand">질문 게시판</span>
+      <h1 class="mt-2 text-3xl font-extrabold tracking-tight">여행 전, 무엇이든 물어보세요</h1>
+      <p class="mt-2 text-15 text-muted">먼저 다녀온 여행자들이 답해드려요.</p>
+    </div>
+    <a href="qa-write.html" class="inline-flex h-12 items-center rounded-lg bg-brand px-8 text-15 font-semibold text-white transition hover:bg-brand-ink">질문하기</a>
+  </div>
+
+  <div class="flex items-center gap-2 border-b-2 border-ink pb-4">
+    <span class="inline-flex h-8.5 cursor-pointer items-center rounded-full border border-transparent bg-brand px-3.5 text-13 font-semibold text-white">전체</span>
+    <span class="inline-flex h-8.5 cursor-pointer items-center rounded-full border border-line bg-white px-3.5 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">교통·이동</span>
+    <span class="inline-flex h-8.5 cursor-pointer items-center rounded-full border border-line bg-white px-3.5 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">숙소</span>
+    <span class="inline-flex h-8.5 cursor-pointer items-center rounded-full border border-line bg-white px-3.5 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">맛집</span>
+    <span class="inline-flex h-8.5 cursor-pointer items-center rounded-full border border-line bg-white px-3.5 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">일정</span>
+    <span class="inline-flex h-8.5 cursor-pointer items-center rounded-full border border-line bg-white px-3.5 text-13 font-semibold text-muted transition hover:border-muted hover:text-ink">기타</span>
+    <div class="relative ml-auto">
+      <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.5"/><path d="M12.5 12.5L16 16"/></svg>
+      <input class="h-9 w-56 rounded-full border border-line bg-white pl-9 pr-3 text-13 outline-none transition placeholder:text-faint focus:border-brand" placeholder="질문 검색" />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-qarow gap-4 px-2 pb-3 pt-3 text-13 font-bold text-muted">
+    <span>제목</span><span>작성자</span><span>작성일</span><span class="text-right">조회</span>
+  </div>
+  <div>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[교통]</span>제주공항에서 성산일출봉까지 버스로 갈 수 있나요?<span class="ml-2 text-13 font-bold text-faint">· 댓글 3</span></span>
+      <span class="text-13 text-muted">제주한바퀴</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.18</span>
+      <span class="text-right text-13 text-muted tabular-nums">312</span>
+    </a>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[숙소]</span>표선 쪽 가성비 숙소 추천해주세요<span class="ml-2 text-13 font-bold text-faint">· 댓글 5</span></span>
+      <span class="text-13 text-muted">노을수집가</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.17</span>
+      <span class="text-right text-13 text-muted tabular-nums">287</span>
+    </a>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[일정]</span>3박 4일 제주 동부 일정 봐주실 분?</span>
+      <span class="text-13 text-muted">느린산책</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.17</span>
+      <span class="text-right text-13 text-muted tabular-nums">156</span>
+    </a>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[맛집]</span>우도에서 점심 먹기 좋은 곳 있을까요?<span class="ml-2 text-13 font-bold text-faint">· 댓글 2</span></span>
+      <span class="text-13 text-muted">길위의하루</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.16</span>
+      <span class="text-right text-13 text-muted tabular-nums">203</span>
+    </a>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[교통]</span>렌터카 없이 강원 동해안 여행 가능한가요?</span>
+      <span class="text-13 text-muted">모모트래블</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.15</span>
+      <span class="text-right text-13 text-muted tabular-nums">98</span>
+    </a>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[기타]</span>우천 시 성산일출봉 대신 갈 만한 실내 명소?<span class="ml-2 text-13 font-bold text-faint">· 댓글 4</span></span>
+      <span class="text-13 text-muted">별헤는밤</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.14</span>
+      <span class="text-right text-13 text-muted tabular-nums">176</span>
+    </a>
+    <a href="qa-detail.html" class="grid grid-cols-qarow items-center gap-4 border-b border-line px-2 py-4 transition hover:bg-sunk">
+      <span class="text-15 font-semibold"><span class="mr-1.5 text-13 font-bold text-brand">[일정]</span>경주 1박 2일이면 어디까지 볼 수 있나요?<span class="ml-2 text-13 font-bold text-faint">· 댓글 6</span></span>
+      <span class="text-13 text-muted">바다윤슬</span>
+      <span class="text-13 text-muted tabular-nums">2026.04.13</span>
+      <span class="text-right text-13 text-muted tabular-nums">241</span>
+    </a></div>
+
+  <div class="flex justify-center gap-1 py-6">
+    <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">‹</a>
+    <span class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg bg-brand px-2 text-sm font-medium text-white">1</span>
+    <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">2</a>
+    <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">3</a>
+    <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">4</a>
+    <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">5</a>
+    <a href="#" class="inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium text-muted hover:bg-sunk hover:text-ink">›</a>
+  </div>
+</main>
+	
+	<div th:replace="~{views/common/modal :: modal}"></div>
+	<footer th:replace="~{views/common/footer :: footer}"></footer>
+</body>
+</html>
