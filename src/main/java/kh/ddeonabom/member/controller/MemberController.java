@@ -1,5 +1,6 @@
 package kh.ddeonabom.member.controller;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +37,7 @@ public class MemberController {
     // 입력한 이메일로 인증번호 전송
     // 서버 세션에 인증코드 저장
 	// =========================================================
-    // 1. 이메일 인증번호 발송 (auth.js의 /member/send와 매칭)
+    // 이메일 인증번호 발송 (auth.js의 /member/send와 매칭)
     // =========================================================
     @PostMapping("/send")
     @ResponseBody
@@ -48,7 +49,7 @@ public class MemberController {
         session.setAttribute("authCode", code);
         session.setAttribute("targetEmail", email);
 
-        return "success"; // 소문자 success 반환
+        return "SUCCESS"; // 대문자 SUCCESS
     }
 
 
@@ -57,7 +58,7 @@ public class MemberController {
     //  성공 시 인증 완료 상태 저장
     // =========================================================
  // =========================================================
-    // 2. 인증번호 검증 (auth.js의 /member/verify와 매칭)
+    // 인증번호 검증 (auth.js의 /member/verify와 매칭)
     // =========================================================
     @PostMapping("/verify")
     @ResponseBody
@@ -71,10 +72,10 @@ public class MemberController {
             session.setAttribute("emailVerified", true);
             session.setAttribute("verifiedEmail", email);
 
-            return "success"; // 소문자 success 반환
+            return "SUCCESS"; // success 반환
         }
 
-        return "fail"; // 소문자 fail 반환
+        return "FAIL"; // fail 반환
     }
 
  //  회원가입 처리
@@ -115,7 +116,7 @@ public class MemberController {
         // -------------------------------
         // 4) 비밀번호 암호화
         // -------------------------------
-        m.setPwd(bcrypt.encode(m.getPwd()));
+        m.setPwd(BCrypt.hashpw(m.getPwd(), BCrypt.gensalt(10)));
 
         // -------------------------------
         // 5) DB 저장
@@ -151,7 +152,7 @@ public class MemberController {
         Member loginUser = mService.login(m);
 
         // 비밀번호 검증
-        if (loginUser != null && bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
+        if (loginUser != null && BCrypt.checkpw(m.getPwd(), loginUser.getPwd())) {
 
             session.setAttribute("loginUser", loginUser);
          // 히든 인풋으로 넘어온 targetUrl(목적지)이 진짜로 존재한다면?
@@ -202,15 +203,17 @@ public class MemberController {
         
         // 💡 [버그 해결 핵심]: 세션 대신 기존 로그인 로직(mService.login)을 재사용해서
         // DB에 들어있는 오염되지 않은 진짜 암호 원본을 실시간으로 새로 가져옵니다.
-        Member dbUser = mService.login(loginUser); 
+        Member dbUser = mService.selectOneMember(loginUser.getId()); 
         if (dbUser == null) {
             return "NOT_LOGGED_IN";
         }
-        
+        System.out.println("★ 입력된 현재비번: " + currentPassword);
+        System.out.println("★ 입력된 새비번: " + newPassword);
+        System.out.println("★ DB의 암호문: " + (dbUser != null ? dbUser.getPwd() : "null"));
         // ② 새로운 비밀번호를 입력하려 할 때 현재 비밀번호 검증 진행
         if (newPassword != null && !newPassword.trim().isEmpty()) {
             // 💡 갓 퍼온 진짜 암호문(dbUser.getPwd())과 화면 입력값(currentPassword)을 실시간 대조!
-            if (!bcrypt.matches(currentPassword, dbUser.getPwd())) {
+            if (!BCrypt.checkpw(currentPassword, dbUser.getPwd())) {
                 return "WRONG_CURRENT_PASSWORD"; // 틀려도 세션이 오염되지 않고 여기서 즉시 안전하게 탈출!
             }
         }
@@ -229,7 +232,7 @@ public class MemberController {
         // ④ DB 업데이트 실행 (비밀번호 변경 여부에 따른 분기)
         int result = 0;
         if (newPassword != null && !newPassword.trim().isEmpty()) {
-            m.setPwd(bcrypt.encode(newPassword)); // 변경할 새 비밀번호 암호화
+            m.setPwd(BCrypt.hashpw(newPassword,BCrypt.gensalt(10))); // 변경할 새 비밀번호 암호화
             result = mService.updateMemberWithPassword(m);
         } else {
             result = mService.updateMemberWithoutPassword(m);
@@ -256,6 +259,8 @@ public class MemberController {
         } else {
             return "FAIL";
         }
+        
+       
     }
     // 수정 페이지에서 [회원 탈퇴] 링크를 클릭했을 때 (GET)
     @GetMapping("/withdraw")
@@ -273,13 +278,107 @@ public class MemberController {
 //1. 아이디 찾기 페이지 열기
 @GetMapping("/find-id")
 public String findIdPage() {
-    return "views/member/find-id"; // views/member/find-id.html 파일을 만드시면 됩니다!
+    return "views/member/find-id";
 }
 
 // 2. 비밀번호 찾기 페이지 열기
-@GetMapping("/find-pw")
+@GetMapping("/find-pwd")
 public String findPwPage() {
-    return "views/member/find-pw"; // views/member/find-pw.html 파일을 만드시면 됩니다!
+    return "views/member/find-pwd";
+}
+//=========================================================
+// 7. 아이디 찾기 최종 처리 (Ajax)
+// =========================================================
+@ResponseBody
+@PostMapping("/find-id")
+public String findId(@RequestParam("email") String email, HttpSession session) {
+    // ① 세션 검증 (인증 완료 여부 및 타겟 이메일 크로스 체크)
+    Boolean emailVerified = (Boolean) session.getAttribute("emailVerified");
+    String verifiedEmail = (String) session.getAttribute("verifiedEmail");
+    
+    if (emailVerified == null || !emailVerified || !email.equals(verifiedEmail)) {
+        return "EMAIL_NOT_VERIFIED";
+    }
+
+    // ② 이메일로 회원 ID 조회 (서비스단 구현 필요)
+    String foundId = mService.findIdByEmail(email); 
+    
+    if (foundId != null) {
+        // 마스킹 처리 예시: travel1234 -> trav****
+        if(foundId.length() > 4) {
+            foundId = foundId.substring(0, 4) + "*".repeat(foundId.length() - 4);
+        }
+        session.removeAttribute("emailVerified"); // 세션 클린업
+        session.removeAttribute("verifiedEmail");
+        return foundId; // 찾은 마스킹 아이디를 통째로 반환!
+    }
+
+    return "FAIL";
+}
+
+// =========================================================
+// 8. 비밀번호 찾기 (임시 비밀번호 생성 + BCrypt 암호화 + 메일 전송)
+// =========================================================
+@ResponseBody
+@PostMapping("/find-pwd")
+public String findPw(@RequestParam("id") String id, @RequestParam("email") String email, HttpSession session) {
+    // ① 세션 검증
+    Boolean emailVerified = (Boolean) session.getAttribute("emailVerified");
+    String verifiedEmail = (String) session.getAttribute("verifiedEmail");
+    
+    if (emailVerified == null || !emailVerified || !email.equals(verifiedEmail)) {
+        return "EMAIL_NOT_VERIFIED";
+    }
+
+    // ② 실제 가입된 회원 아이디와 이메일이 매칭되는지 체크하는 단선 방어
+    Member m = mService.selectOneMember(id);
+    if (m == null || !email.equals(m.getEmail())) {
+        return "MEMBER_NOT_FOUND";
+    }
+
+    // ③ 8자리 안전한 임시 비밀번호 랜덤 생성 (예시 규격)
+    String rawTempPw = java.util.UUID.randomUUID().toString().substring(0, 8) + "!";
+    
+    // ④ 오리지널 BCrypt 엔진으로 암호화 후 DB 저장
+    String encryptedTempPw = BCrypt.hashpw(rawTempPw, BCrypt.gensalt(10));
+    m.setPwd(encryptedTempPw);
+    
+    int result = mService.updatePasswordOnly(m); // 비밀번호만 새로 바꾸는 서비스 호출
+
+    if (result > 0) {
+        // ⑤ 원본 글자(rawTempPw)를 유저 메일로 발송 (emailService 연동)
+        emailService.sendTempPassword(email, rawTempPw);
+        
+        session.removeAttribute("emailVerified"); // 세션 클린업
+        session.removeAttribute("verifiedEmail");
+        return "SUCCESS";
+    }
+
+    return "FAIL";
+}
+//=========================================================
+// [★ 추가] 계정 찾기 전용 인증번호 발송 (기존 회원 대상 우회로)
+// =========================================================
+@ResponseBody
+@PostMapping("/find-account/send")
+public String sendAuthCodeForFind(@RequestParam("email") String email, HttpSession session) {
+    
+    // 1. 실제로 가입된 이메일이 맞는지 먼저 체크 (없으면 메일 안 보냄)
+    boolean isExist = mService.existsByEmail(email); 
+    if (!isExist) {
+        return "NOT_FOUND"; // 가입되지 않은 메일이면 프론트에 즉시 알림
+    }
+
+    // 2. 가입된 회원이 맞으므로 6자리 랜덤 인증번호 생성 후 발송
+    // (기존 회원가입 시 사용하던 emailService의 인증코드 생성 로직 그대로 재활용)
+    String code = emailService.sendAuthCode(email);
+
+    // 3. 기존의 auth.js 및 검증 컨트롤러(/member/verify)가 그대로 읽을 수 있도록 세션 Key 바인딩
+    session.setAttribute("authCode", code);
+    session.setAttribute("targetEmail", email);
+    session.setMaxInactiveInterval(5 * 60); // 안전하게 5분간 세션 유지
+
+    return "SUCCESS";
 }
 }
 

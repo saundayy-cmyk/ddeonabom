@@ -67,4 +67,18 @@ public class MemberService implements UserDetailsService { // 💡 1. 시큐리�
 	public int updateMemberWithoutPassword(Member m) {
 		return mapper.updateMemberWithoutPassword(m);
 	}
+
+
+	public Member selectOneMember(String id) {
+		return mapper.selectOneMember(id);
+	}
+
+	public String findIdByEmail(String email) {
+		return mapper.findIdByEmail(email);
+	}
+
+	public int updatePasswordOnly(Member m) {
+		
+		return mapper.updatePasswordOnly(m);
+	}
 }

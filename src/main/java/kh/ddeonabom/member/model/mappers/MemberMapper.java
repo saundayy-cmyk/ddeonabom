@@ -16,4 +16,10 @@ public interface MemberMapper {
 
 	int updateMemberWithoutPassword(Member m);
 
+	Member selectOneMember(String id);
+
+	String findIdByEmail(String email);
+
+	int updatePasswordOnly(Member m);
+
 }

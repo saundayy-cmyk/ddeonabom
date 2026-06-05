@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{views/common/head::head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>떠나봄 - 로그인</title>
     <!-- 테일윈드 CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
 
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+	
     <div class="w-full max-w-md p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
         
         <!-- 로고 / 타이틀 -->
@@ -19,7 +20,7 @@
 	
         <!-- 로그인 폼 -->
         <form action="/member/login" method="POST" class="space-y-6">
-        <!-- 메인페이지 만들기전까지만 -->
+        <!-- 메인페이지 만들기전까지만 로그인후 수정페이지로 -->
             <input type="hidden" name="targetUrl" value="/member/edit">
             <!-- 아이디 입력 -->
             <div>
@@ -52,7 +53,7 @@
             <div class="flex justify-center space-x-4 mb-3">
                 <a href="/member/find-id" class="hover:text-gray-800 transition-colors">아이디 찾기</a>
                 <span class="text-gray-300">|</span>
-                <a href="/member/find-pw" class="hover:text-gray-800 transition-colors">비밀번호 찾기</a>
+                <a href="/member/find-pwd" class="hover:text-gray-800 transition-colors">비밀번호 찾기</a>
             </div>
             <div>
                 <a href="/member/join" class="text-indigo-600 hover:text-indigo-500 font-medium transition-colors">회원가입</a>

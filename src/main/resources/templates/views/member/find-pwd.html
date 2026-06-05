@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>비밀번호 찾기 — 떠나봄</title>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script th:src="@{/js/tw.js}"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght=200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style> body { font-family:'Noto Sans KR', system-ui, sans-serif; -webkit-font-smoothing:antialiased; letter-spacing:-0.01em; } </style>
+</head>
+<body class="bg-white text-ink">
+
+<header class="sticky top-0 z-50 h-header border-b border-line bg-white/80 backdrop-blur-md backdrop-saturate-150">
+  <div class="mx-auto flex h-full max-w-wide items-center justify-between px-6">
+    <a th:href="@{/}" class="flex items-center gap-2">
+      <span class="inline-flex h-6 w-6 items-center justify-center text-brand">
+        <svg viewBox="0 0 32 32" class="h-full w-full" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24 Q 10 8, 16 14 T 26 6"/><circle cx="6" cy="24" r="1.6" fill="currentColor" stroke="none"/><circle cx="26" cy="6" r="1.6" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="text-xl font-extralight tracking-wide">떠나봄</span>
+    </a>
+  </div>
+</header>
+
+<main class="mx-auto max-w-md px-6 py-24">
+  <h1 class="mb-2 text-3xl font-extrabold tracking-tight">비밀번호 찾기</h1>
+  <p class="mb-12 text-15 leading-relaxed text-muted">가입 시 등록한 아이디와 이메일로 비밀번호를 재발급할 수 있습니다.</p>
+
+  <div class="mb-12 flex gap-1 rounded-lg border border-line bg-sunk p-1">
+    <a th:href="@{/member/find-id}" class="flex-1 rounded-md py-2.5 text-center text-sm font-semibold text-muted">아이디 찾기</a>
+    <a th:href="@{/member/find-pwd}" class="flex-1 rounded-md bg-white py-2.5 text-center text-sm font-semibold text-ink shadow-soft">비밀번호 찾기</a>
+  </div>
+
+  <form id="findPwForm" onsubmit="return false;" class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <label class="text-13 font-semibold">아이디</label>
+      <input type="text" id="userId" name="id" class="h-12 w-full rounded-lg border border-line bg-white px-4 text-sm outline-none transition" placeholder="회원 아이디 입력" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label class="text-13 font-semibold">이메일</label>
+      <div class="flex gap-2">
+        <input type="email" id="userEmail" name="email" class="h-12 flex-1 rounded-lg border border-line bg-white px-4 text-sm outline-none transition" placeholder="가입 시 등록한 이메일" />
+        <button type="button" id="btnSendCode" class="inline-flex h-12 shrink-0 items-center rounded-lg border border-line bg-white px-4 text-sm font-semibold text-ink transition hover:bg-sunk">인증번호 발송</button>
+      </div>
+    </div>
+    
+    <div class="flex flex-col gap-2">
+      <label class="text-13 font-semibold">인증번호</label>
+      <div class="flex gap-2">
+        <input type="text" id="authCode" class="h-12 flex-1 rounded-lg border border-line bg-white px-4 text-sm outline-none transition" placeholder="메일로 받은 6자리" />
+        <button type="button" id="btnVerifyCode" class="inline-flex h-12 shrink-0 items-center rounded-lg border border-line bg-white px-4 text-sm font-semibold text-ink transition hover:bg-sunk">인증 확인</button>
+      </div>
+    </div>
+    
+    <div id="statusMsg" class="text-sm font-medium mt-1"></div>
+
+    <button type="button" id="btnSubmitFindPw" disabled 
+            class="mt-2 inline-flex h-12 w-full items-center justify-center rounded-lg text-15 font-semibold transition
+                   bg-gray-300 text-white cursor-not-allowed">
+      비밀번호 재발급하기
+    </button>
+  </form>
+</main>
+
+<script th:src="@{/js/auth.js}"></script>
+
+<script>
+$(document).ready(function() {
+    let $msg = $("#statusMsg");
+
+    // 1. auth.js 모듈 연동 및 초기화 (계정 찾기 우회 전용 /member/find-account/send 활용)
+    initEmailVerification({
+        sendBtn: "#btnSendCode",
+        verifyBtn: "#btnVerifyCode",
+        authArea: null, 
+        emailMsg: "#statusMsg",
+        authCodeInput: "#authCode",
+        getEmailFunction: function() {
+            return $("#userEmail").val().trim();
+        },
+        successCallback: function() {
+            // 💡 이메일 인증 완료 시 비밀번호 찾기 화면만의 단독 후처리!
+            // 이제 복잡하게 클래스를 뗐다 붙였다 하지 않고, disabled 속성만 풀면 색상이 자동으로 바뀝니다.
+            $("#btnSubmitFindPw").prop("disabled", false);
+                                 
+            $("#userEmail").prop("readonly", true);
+            $("#userId").prop("readonly", true); // 인증 완료 후 변조 방지를 위해 아이디창도 잠금
+        }
+    });
+
+    // 2. 최종 임시 비밀번호 발급 요청 (컨트롤러 @PostMapping("/find-pwd") 직통 타격)
+    $("#btnSubmitFindPw").click(function() {
+        let id = $("#userId").val().trim();
+        let email = $("#userEmail").val().trim();
+        
+        if(!id) {
+            $msg.text("❌ 아이디를 입력해 주세요.").css("color", "red");
+            return;
+        }
+        if(!email) {
+            $msg.text("❌ 이메일을 입력해 주세요.").css("color", "red");
+            return;
+        }
+
+        $msg.text("🔄 임시 비밀번호를 생성하여 메일을 발송 중입니다...").css("color", "orange");
+
+        $.post("/member/find-pwd", { id: id, email: email }, function(res) {
+            if(res === "SUCCESS") {
+                alert("✔ 임시 비밀번호가 이메일로 안전하게 발송되었습니다.\n로그인 후 마이페이지에서 비밀번호를 꼭 변경해 주세요!");
+                location.href = "/member/login"; 
+            } else if(res === "MEMBER_NOT_FOUND") {
+                $msg.text("❌ 입력하신 아이디와 이메일 정보가 일치하는 회원이 없습니다.").css("color", "red");
+            } else if(res === "EMAIL_NOT_VERIFIED") {
+                $msg.text("🚨 세션 인증이 만료되었습니다. 이메일 인증을 다시 진행해 주세요.").css("color", "red");
+            } else {
+                $msg.text("❌ 시스템 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.").css("color", "red");
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
