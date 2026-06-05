@@ -3,13 +3,13 @@
 <head th:replace="~{views/common/head :: head}"></head>
 <body>
 	<div th:replace="~{views/common/navbar :: navbar}"></div>
+
 	<main class="mx-auto max-w-wide px-6">
 	  <div class="flex items-end justify-between pb-5 pt-12">
 	    <div>
 	      <span class="inline-flex items-center gap-2 text-sm font-semibold text-brand before:h-0.5 before:w-4 before:rounded before:bg-brand">일정 플래너</span>
 	      <h1 class="mt-2 text-h2 font-extrabold tracking-tight">내 일정</h1>
 	    </div>
-	    <a href="itinerary.html" class="inline-flex h-12 items-center rounded-lg bg-brand px-8 text-15 font-semibold text-white transition hover:bg-brand-ink">＋ 새 일정 만들기</a>
 	  </div>
 	
 	  <div class="flex items-center gap-2 border-b border-line pb-5">
@@ -19,6 +19,22 @@
 	    <div class="ml-auto"><select class="h-9 rounded-lg border border-line bg-white px-3 text-13 font-semibold text-ink outline-none"><option>최근 수정순</option><option>여행일순</option><option>이름순</option></select></div>
 	  </div>
 	
+	<!-- 일정 없을때 -->
+	<div class="flex flex-col items-center justify-center gap-3 px-5 py-24 text-center">
+    <span class="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-sunk text-faint">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M5 18 Q 9 8, 13 12 T 19 6"/>
+        <circle cx="5" cy="18" r="1.6" fill="currentColor" stroke="none"/>
+        <circle cx="19" cy="6" r="1.6" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <h3 class="text-22 font-bold tracking-tight">아직 그린 길이 없어요</h3>
+    <p class="max-w-sm text-15 leading-relaxed text-muted">첫 여행 일정을 만들어보세요.</p>
+    <a href="/schedule/new" class="mt-3 inline-flex h-12 items-center rounded-lg bg-brand px-8 text-15 font-semibold text-white transition hover:bg-brand-ink">첫 일정 만들기</a>
+    <a href="/landmark/list" class="text-13 font-medium text-faint underline-offset-4 transition hover:text-muted hover:underline">관광지 먼저 둘러보기</a>
+  </div>
+	
+	<!-- 일정 있을때 -->
 	  <div class="grid grid-cols-3 gap-5 py-6">
 	    <a href="/schedule/new" class="flex min-h-72 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-line bg-sunk text-center text-muted transition hover:border-brand hover:bg-brand-soft hover:text-brand">
 	      <span class="flex h-13 w-13 items-center justify-center rounded-full bg-white text-2xl shadow-soft">＋</span>
@@ -72,8 +88,7 @@
 	      <div class="mt-3 flex gap-4 text-13 text-muted"><span><b class="font-bold text-ink tabular-nums">0</b>곳</span></div>
 	    </a>
 	    <div class="mt-auto flex border-t border-line">
-	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 text-13 font-semibold text-muted transition hover:bg-sunk hover:text-ink"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 3l2 2-7 7-2.5.5.5-2.5z"/></svg> 이어서 그리기</button>
-	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-l border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
+	      <button class="flex h-11 flex-1 items-center justify-center gap-1.5 border-line text-13 font-semibold text-muted transition hover:bg-red-50 hover:text-err"><svg viewBox="0 0 16 16" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6.5 5V3.5h3V5M5 5l.6 8h4.8L11 5"/></svg> 삭제</button>
 	    </div>
 	  </div>
 	
