@@ -1,4 +1,4 @@
-package kh.ddeonabom.member.controller;
+package kh.ddeonabom.schedule.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,7 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("schedule/new")
-	public String schedule() {
-		return "views/schedule/new";
+	public String newSchedule() {
+		return "views/schedule/write";
 	}
 }
