@@ -108,11 +108,15 @@
       </div>
     </div>
 
-    <div class="my-6 flex justify-end gap-2">
-      <a href="/index" class="inline-flex h-11 items-center rounded-lg border border-line bg-white px-5 text-sm font-semibold text-ink transition hover:bg-sunk">취소</a>
-      <button type="submit" class="inline-flex h-11 items-center rounded-lg bg-brand px-5 text-sm font-semibold text-white transition hover:bg-brand-ink">변경 사항 저장</button>
-    </div>
 
+	<div class="my-6 flex justify-end gap-2">
+  <a href="/member/mypage" class="inline-flex h-11 items-center rounded-lg border border-brand text-brand bg-brand-soft/50 px-5 text-sm font-bold transition hover:bg-brand-soft">
+    ⚡ 마이페이지 틀 확인하기
+  </a>
+  
+  <a href="/index" class="inline-flex h-11 items-center rounded-lg border border-line bg-white px-5 text-sm font-semibold text-ink transition hover:bg-sunk">취소</a>
+  <button type="submit" class="inline-flex h-11 items-center rounded-lg bg-brand px-5 text-sm font-semibold text-white transition hover:bg-brand-ink">변경 사항 저장</button>
+</div>
     <div class="flex items-center justify-between rounded-xl border border-err/20 bg-err/5 p-5">
       <div>
         <div class="font-bold text-err">회원 탈퇴</div>
@@ -207,7 +211,7 @@ $(document).ready(function() {
 
         // 새로운 비밀번호 유효성 검사
         if (pwd.trim() !== "") {
-            let reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+        	let reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()~_+=\{\}\[\]| \-])[A-Za-z\d!@#$%^&*()~_+=\{\}\[\]| \-]{8,20}$/;
             if(!reg.test(pwd)){
                 alert("새로운 비밀번호 형식을 확인해주세요.");
                 return;
@@ -238,7 +242,7 @@ $(document).ready(function() {
         $.post("/member/update", formData, function(res){
             if(res === "SUCCESS" || res === "success"){
                 alert("회원정보 수정이 완료되었습니다.");
-                location.href = "/index"; 
+                location.href = "index"; 
             } else if(res === "WRONG_CURRENT_PASSWORD") {
                 alert("현재 비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
                 $("#currentPassword").val("").focus();

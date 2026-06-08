@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떠나봄 - 마이페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .sidebar { min-height: 500px; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        .content-box { min-height: 500px; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-5">떠나봄</h1>
+    <h3 class="mb-4">마이페이지</h3>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="sidebar">
+                <h5>나의 여행</h5>
+                <ul class="nav flex-column mb-4">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/member/my-trips}">• 내 일정 보기</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/member/favorites}">• 관심 일정/관광지 목록 보기</a></li>
+                </ul>
+                
+                <h5>나의 활동</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/member/my-posts}">• 작성 글 보기</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/member/my-comments}">• 작성 댓글 보기</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/member/edit}">• 내정보 수정</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+</body>
+</html>

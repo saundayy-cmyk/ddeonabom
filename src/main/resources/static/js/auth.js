@@ -4,14 +4,14 @@
 
 // 비밀번호 정규식 및 일치 여부 실시간 검증 세팅
 function initPasswordValidation(pwdInputSelector, pwdCheckSelector, ruleMsgSelector, mismatchMsgSelector) {
-    const reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+    let reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()~_+=\{\}\[\]| \-])[A-Za-z\d!@#$%^&*()~_+=\{\}\[\]| \-]{8,20}$/;
 
     $(pwdInputSelector).on("keyup", function() {
         let pwd = $(this).val();
         if (reg.test(pwd)) {
             $(ruleMsgSelector).text("사용 가능한 비밀번호입니다.").css("color", "green");
         } else {
-            $(ruleMsgSelector).text("8~20자, 영문·숫자·특수문자(!@#$%^&*)를 각각 1개 이상 포함해야 합니다.").css("color", "red");
+            $(ruleMsgSelector).text("8~20자, 영문·숫자·특수문자(!@#$%^&*()~-_+=[]{}\|)를 각각 1개 이상 포함해야 합니다.").css("color", "red");
         }
         checkPasswordMatch(pwdInputSelector, pwdCheckSelector, mismatchMsgSelector);
     });

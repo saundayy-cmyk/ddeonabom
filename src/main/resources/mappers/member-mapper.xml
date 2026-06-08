@@ -16,7 +16,12 @@
     WHERE EMAIL = #{email}
       AND STATUS = 'Y'
 </select>
-
+<select id="existsByNickName" resultType="int">
+    SELECT COUNT(*)
+    FROM MEMBER
+    WHERE NICKNAME = #{nickName}
+      AND STATUS = 'Y'
+</select>
 
 <insert id="insertMember">
 	insert into Member(

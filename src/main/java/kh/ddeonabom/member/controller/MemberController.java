@@ -1,6 +1,7 @@
 package kh.ddeonabom.member.controller;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
+
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +39,7 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping("/check-id")
 	public String checkId(@RequestParam("id") String id) {
-	    
-	    // 만약 STATUS='Y'인 회원이 이미 존재한다면 중복된 아이디
+		// 만약 STATUS='Y'인 회원이 이미 존재한다면 중복된 아이디
 	    Member m = mService.selectOneMember(id);
 	    
 	    if (m != null) {
@@ -100,7 +100,7 @@ public class MemberController {
     @PostMapping("/join")
     @ResponseBody
     public String join(@ModelAttribute Member m, HttpSession session) {
-
+    	
         // -------------------------------
         // 이메일 인증 여부 체크
         // -------------------------------
@@ -125,16 +125,23 @@ public class MemberController {
         if (mService.existsByEmail(m.getEmail())) {
             return "DUPLICATE_EMAIL";
         }
+        if (mService.existsByNickName(m.getNickName())) { 
+            return "DUPLICATE_NICKNAME"; // 프론트엔드에 닉네임 중복 알림 전달
+        }
 
         // -------------------------------
         // 비밀번호 암호화
         // -------------------------------
-        m.setPwd(BCrypt.hashpw(m.getPwd(), BCrypt.gensalt(10)));
-
+        m.setPwd(bcrypt.encode(m.getPwd())); // 👈 주입받은 'bcrypt' 객체를 그대로 사용
+        
+        System.out.println("==============================================");
+        System.out.println("★ [회원가입] 화면에서 서버로 넘어온 원본 비밀번호: [" + m.getPwd() + "]");
+        System.out.println("==============================================");
         // -------------------------------
         // DB 저장
         // -------------------------------
         int result = mService.insertMember(m);
+        
 
         if (result > 0) {
 
@@ -165,7 +172,7 @@ public class MemberController {
         Member loginUser = mService.login(m);
 
         // 비밀번호 검증
-        if (loginUser != null && BCrypt.checkpw(m.getPwd(), loginUser.getPwd())) {
+        if (loginUser != null && bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
 
             session.setAttribute("loginUser", loginUser);
          // 히든 인풋으로 넘어온 targetUrl(목적지)이 진짜로 존재한다면?
@@ -193,11 +200,15 @@ public class MemberController {
         // edit.html이 데이터를 꺼내 쓸 수 있도록 모델에 담아서 배달하기
         model.addAttribute("loginUser", loginUser);
         
-        return "views/member/edit";
+       return "views/member/edit";
    
+    
+        
+        
+        
     }
  // =========================================================
-    // 회원정보 수정 최종 처리 (교정 및 버그 박멸 완료 구역)
+    // 회원정보 수정 최종 처리
     // =========================================================
     @ResponseBody
     @PostMapping("/update")
@@ -225,9 +236,9 @@ public class MemberController {
         System.out.println("★ DB의 암호문: " + (dbUser != null ? dbUser.getPwd() : "null"));
         // ② 새로운 비밀번호를 입력하려 할 때 현재 비밀번호 검증 진행
         if (newPassword != null && !newPassword.trim().isEmpty()) {
-            // 💡 갓 퍼온 진짜 암호문(dbUser.getPwd())과 화면 입력값(currentPassword)을 실시간 대조!
-            if (!BCrypt.checkpw(currentPassword, dbUser.getPwd())) {
-                return "WRONG_CURRENT_PASSWORD"; // 틀려도 세션이 오염되지 않고 여기서 즉시 안전하게 탈출!
+            // 💡 갓 퍼온 진짜 암호문(dbUser.getPwd())과 화면 입력값(currentPassword)을 실시간 대조
+            if (!bcrypt.matches(currentPassword, dbUser.getPwd())) {
+                return "WRONG_CURRENT_PASSWORD"; // 틀려도 세션이 오염되지 않고 여기서 즉시 안전하게 탈출
             }
         }
         
@@ -245,7 +256,7 @@ public class MemberController {
         // DB 업데이트 실행 (비밀번호 변경 여부에 따른 분기)
         int result = 0;
         if (newPassword != null && !newPassword.trim().isEmpty()) {
-            m.setPwd(BCrypt.hashpw(newPassword,BCrypt.gensalt(10))); // 변경할 새 비밀번호 암호화
+        	m.setPwd(bcrypt.encode(newPassword)); // 변경할 새 비밀번호 암호화
             result = mService.updateMemberWithPassword(m);
         } else {
             result = mService.updateMemberWithoutPassword(m);
@@ -262,7 +273,7 @@ public class MemberController {
             if (m.getNickName() != null) loginUser.setNickName(m.getNickName());
             if (m.getEmail() != null) loginUser.setEmail(m.getEmail());
             
-            // 💡 [추가]: 비밀번호도 정상 변경되었다면 새 암호문으로 세션을 완벽 동기화해줍니다.
+            //  비밀번호도 정상 변경되었다면 새 암호문으로 세션을 완벽 동기화
             if (newPassword != null && !newPassword.trim().isEmpty()) {
                 loginUser.setPwd(m.getPwd()); 
             }
@@ -301,7 +312,7 @@ public class MemberController {
      }
 
      //  실시간으로 갓 퍼온 진짜 암호문(dbUser.getPwd())과 화면 입력값(password)
-     if (!BCrypt.checkpw(password, dbUser.getPwd())) {
+     if (!bcrypt.matches(password, dbUser.getPwd())) {
          // ❌ 비밀번호가 틀리면 withdraw.html 화면에 에러 문구를 들고 리다이렉트
          return "redirect:/member/withdraw?error";
      }
@@ -337,7 +348,7 @@ public String findPwPage() {
 @ResponseBody
 @PostMapping("/find-id")
 public String findId(@RequestParam("email") String email, HttpSession session) {
-    // ① 세션 검증 (인증 완료 여부 및 타겟 이메일 크로스 체크)
+    // 세션 검증 (인증 완료 여부 및 타겟 이메일 크로스 체크)
     Boolean emailVerified = (Boolean) session.getAttribute("emailVerified");
     String verifiedEmail = (String) session.getAttribute("verifiedEmail");
     
@@ -355,7 +366,7 @@ public String findId(@RequestParam("email") String email, HttpSession session) {
         }
         session.removeAttribute("emailVerified"); // 세션 클린업
         session.removeAttribute("verifiedEmail");
-        return foundId; // 찾은 마스킹 아이디를 통째로 반환!
+        return foundId; // 찾은 마스킹 아이디를 통째로 반환
     }
 
     return "FAIL";
@@ -385,7 +396,7 @@ public String findPw(@RequestParam("id") String id, @RequestParam("email") Strin
     String rawTempPw = java.util.UUID.randomUUID().toString().substring(0, 8) + "!";
     
     // 오리지널 BCrypt 엔진으로 암호화 후 DB 저장
-    String encryptedTempPw = BCrypt.hashpw(rawTempPw, BCrypt.gensalt(10));
+    String encryptedTempPw = bcrypt.encode(rawTempPw);
     m.setPwd(encryptedTempPw);
     
     int result = mService.updatePasswordOnly(m); // 비밀번호만 새로 바꾸는 서비스 호출
@@ -425,5 +436,11 @@ public String sendAuthCodeForFind(@RequestParam("email") String email, HttpSessi
 
     return "SUCCESS";
 }
+
+
+
+
+
+
 }
 

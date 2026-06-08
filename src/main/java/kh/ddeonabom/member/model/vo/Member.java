@@ -22,6 +22,7 @@ public class Member {
 	private String email;
 	private String phone;
 	private String isAdmin;
+	private String status;
 	private Date enrollDate;
 	private Date modifyDate;
 	

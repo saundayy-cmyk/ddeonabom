@@ -25,4 +25,6 @@ public interface MemberMapper {
 
 	int withdrawMember(String id);
 
+	int existsByNickName(String nickName);
+
 }
